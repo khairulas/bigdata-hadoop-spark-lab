@@ -42,7 +42,7 @@ services:
       - ./data:/home/jovyan/data 
     networks:
       - bigdata-network
-    command: start-notebook.sh --IdentityProvider.token=''
+    command: start-notebook.sh --IdentityProvider.token='9b9c9bf1ec5c029eb6f59aed2bd416d8e1a7c8f232ff1bc4'
 
   # --- STORAGE LAYER (HDFS) ---
   namenode:

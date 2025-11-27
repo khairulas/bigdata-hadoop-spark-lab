@@ -23,7 +23,7 @@ docker exec -it namenode hdfs dfs -chmod -R 777 /
 ```
 
 ### 3. Access JupyterLab
-Open your browser to: http://localhost:8888
+Open your browser to: http://localhost:8888  *Go to section Getting Jupyter Token below to get Jupyter token.
 
 Critical: How to Connect Spark to HDFS
 In every new Notebook, you must use this specific configuration block to ensure Spark talks to the Docker container correctly.
@@ -52,6 +52,8 @@ print("Spark Connected!")
 ```
 
 ## Lab Exercises
+**Using Jupyter Notebook, open LabExample.ipynb notebook.**
+
 Ingest: Upload a CSV to the Jupyter interface.
 
 Process: Use Pandas to read the CSV and convert it to a Spark DataFrame.
@@ -59,3 +61,35 @@ Process: Use Pandas to read the CSV and convert it to a Spark DataFrame.
 Store: Write the DataFrame to HDFS (hdfs://namenode:9000/user/data/...).
 
 Analyze: Read the Parquet file back from HDFS and run SQL queries.
+
+# Getting Jupyter Token
+
+## Option 1: Get the Token (Immediate Fix)
+1. Open your PowerShell terminal again.
+
+2. Run this command to see the logs inside the Jupyter container:
+
+```PowerShell
+
+docker logs bigdata-jupyter
+```
+
+3. Scroll to the bottom. You will see a block of text that looks like this:
+
+```Plaintext
+
+http://127.0.0.1:8888/lab?token=c8de56fa... (long string of characters)
+```
+
+4. Copy only the token part (the long string of characters after token=) and paste it into the "Password or token" box in your browser.
+
+5. Click "Log in".
+
+## Option 2: Disable the Token (For Convenience)
+Since this is a local learning lab, you probably don't want to copy-paste a token every time you restart Docker. You can disable the password requirement permanently.
+
+1. Open your docker-compose.yml file.
+
+2. Find the jupyter service section.
+
+3. Add the line command: start-notebook.sh --IdentityProvider.token='' at the end of that section.
