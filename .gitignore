@@ -1,0 +1,18 @@
+# --- Big Data Storage ---
+# Ignore the mapped volumes for HDFS NameNode and DataNode
+data/
+namenode/
+datanode/
+
+# Ignore Generated Datasets
+work/raw_sales_data.csv
+
+# --- Python/Jupyter ---
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+__pycache__/
+*.pyc
+
+# --- OS Files ---
+.DS_Store
+Thumbs.db
