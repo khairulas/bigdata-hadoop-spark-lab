@@ -93,3 +93,70 @@ Since this is a local learning lab, you probably don't want to copy-paste a toke
 2. Find the jupyter service section.
 
 3. Add the line command: start-notebook.sh --IdentityProvider.token='' at the end of that section.
+
+# Data Visualization
+### 1. How to Visualize with Python (Streamlit)
+Students can build interactive web dashboards directly inside the container.
+
+Install Library: In Jupyter, run pip install streamlit.
+
+Create App: Create a file dashboard.py in Jupyter:
+
+```Python
+
+import streamlit as st
+import pandas as pd
+import numpy as np
+
+st.title('Big Data Sales Dashboard')
+
+# Simulate reading from HDFS or Spark processing result
+df = pd.DataFrame({
+    'Category': ['Electronics', 'Clothing', 'Home'],
+    'Revenue': [50000, 30000, 45000]
+})
+
+st.bar_chart(df.set_index('Category'))
+```
+
+Run it: Open a Terminal inside Jupyter and run:
+
+```Bash
+
+streamlit run dashboard.py
+```
+
+View it: Open http://localhost:8501 in your Windows browser.
+
+### 2. How to Visualize with Power BI
+Since we added the spark-thrift-server, Power BI can now query your cluster.
+
+1. Prerequisite: Install the Simba Spark ODBC Driver (available from Databricks or widely online) on your Windows machine.
+
+2. Configure ODBC:
+
+  * Open "ODBC Data Sources (64-bit)" on Windows.
+
+  * Add a new System DSN for Spark.
+
+  * Host: localhost
+
+  * Port: 10000
+
+  * Auth Mechanism: User Name (use admin, no password).
+
+3. Connect in Power BI:
+
+  * Get Data -> ODBC.
+
+  * Select your Spark DSN.
+
+  * In the "Advanced Options" SQL statement box, you can query data directly from HDFS using SparkSQL:
+
+```SQL
+
+-- Example: Read a Parquet file sitting in HDFS
+SELECT * FROM parquet.`hdfs://namenode:9000/user/data/processed_sales`
+```
+
+  * Click Load.
