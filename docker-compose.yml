@@ -27,12 +27,15 @@ services:
       - bigdata-network
 
   jupyter:
-    image: jupyter/pyspark-notebook:spark-3.3.0
+    build: 
+      context: .
+      dockerfile: Dockerfile
     container_name: bigdata-jupyter
     ports:
       - "8888:8888"
       # Expose the driver ports for the worker to connect back
       - "20002:20002" 
+      - "8501:8501"
     environment:
       - JUPYTER_ENABLE_LAB=yes
       - GRANT_SUDO=yes
@@ -42,7 +45,7 @@ services:
       - ./data:/home/jovyan/data 
     networks:
       - bigdata-network
-    command: start-notebook.sh --IdentityProvider.token='9b9c9bf1ec5c029eb6f59aed2bd416d8e1a7c8f232ff1bc4'
+    command: start-notebook.sh --IdentityProvider.token=''
 
   # --- STORAGE LAYER (HDFS) ---
   namenode:
