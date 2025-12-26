@@ -16,7 +16,8 @@ A containerized environment for teaching Big Data processing using **Apache Spar
 
 2.  **Navigate to the Directory**
     ```bash
-    cd bigdata-hadoop-hive-lab
+    cd bigdata-hadoop-spark-lab
+    ```
 
 ## Quick Start
 
