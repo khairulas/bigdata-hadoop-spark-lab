@@ -6,7 +6,18 @@ A containerized environment for teaching Big Data processing using **Apache Spar
 * **Compute:** Apache Spark 3.3 (Master + Worker)
 * **Interface:** JupyterLab (Python 3.10)
 * **Storage:** Hadoop HDFS (NameNode + DataNode)
+## 📥 Installation
 
+1. **Clone the Repository**
+    Open your terminal (PowerShell or CMD) and run:
+    ```bash
+    git clone https://github.com/khairulas/bigdata-hadoop-hive-lab.git
+    ```
+
+2.  **Navigate to the Directory**
+    ```bash
+    cd bigdata-hadoop-hive-lab
+    
 ## Quick Start
 
 ### 1. Start the Cluster
