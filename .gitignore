@@ -3,6 +3,10 @@
 data/
 namenode/
 datanode/
+# --- Database and Streaming Volumes ---
+mongo_data/
+kafka_data/
+zk_data/
 
 # Ignore Generated Datasets
 work/raw_sales_data.csv
