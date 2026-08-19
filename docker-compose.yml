@@ -1,4 +1,3 @@
-version: "3"
 
 services:
   # --- COMPUTE LAYER (Python 3.10) ---
@@ -6,6 +5,8 @@ services:
     image: jupyter/pyspark-notebook:spark-3.3.0
     container_name: spark-master
     user: root
+    environment:
+      - JAVA_TOOL_OPTIONS=-XX:-UseContainerSupport
     command: /usr/local/spark/bin/spark-class org.apache.spark.deploy.master.Master
     ports:
       - "8080:8080"
@@ -23,6 +24,7 @@ services:
     environment:
       - SPARK_WORKER_CORES=1
       - SPARK_WORKER_MEMORY=1G
+      - JAVA_TOOL_OPTIONS=-XX:-UseContainerSupport
     networks:
       - bigdata-network
 
@@ -39,6 +41,7 @@ services:
     environment:
       - JUPYTER_ENABLE_LAB=yes
       - GRANT_SUDO=yes
+      - JAVA_TOOL_OPTIONS=-XX:-UseContainerSupport
     user: root
     volumes:
       - ./notebooks:/home/jovyan/work
@@ -50,7 +53,7 @@ services:
   # --- STORAGE LAYER (HDFS) ---
   namenode:
     image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
-    container_name: namenode
+    container_name: spark-namenode
     restart: always
     ports:
       - "9870:9870" # HDFS Browser UI
@@ -66,7 +69,7 @@ services:
 
   datanode:
     image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
-    container_name: datanode
+    container_name: spark-datanode
     restart: always
     environment:
       - SERVICE_PRECONDITION=namenode:9870
