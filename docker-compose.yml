@@ -3,18 +3,21 @@ version: "3"
 services:
   # --- COMPUTE LAYER (Python 3.10) ---
   spark-master:
-    image: jupyter/pyspark-notebook:spark-3.3.0
+    image: jupyter/pyspark-notebook:spark-3.5.0
     container_name: spark-master
     user: root
     command: /usr/local/spark/bin/spark-class org.apache.spark.deploy.master.Master
+    environment:
+      - JAVA_TOOL_OPTIONS=-XX:-UseContainerSupport
     ports:
       - "8080:8080"
       - "7077:7077"
     networks:
       - bigdata-network
+    build: .
 
   spark-worker:
-    image: jupyter/pyspark-notebook:spark-3.3.0
+    image: jupyter/pyspark-notebook:spark-3.5.0
     container_name: spark-worker
     user: root
     depends_on:
@@ -23,10 +26,12 @@ services:
     environment:
       - SPARK_WORKER_CORES=1
       - SPARK_WORKER_MEMORY=1G
+      - JAVA_TOOL_OPTIONS=-XX:-UseContainerSupport
     networks:
       - bigdata-network
 
   jupyter:
+    image: jupyter/pyspark-notebook:spark-3.5.0
     build: 
       context: .
       dockerfile: Dockerfile
@@ -39,6 +44,7 @@ services:
     environment:
       - JUPYTER_ENABLE_LAB=yes
       - GRANT_SUDO=yes
+      - JAVA_TOOL_OPTIONS=-XX:-UseContainerSupport
     user: root
     volumes:
       - ./notebooks:/home/jovyan/work
