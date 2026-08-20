@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   # --- COMPUTE LAYER (Python 3.10) ---
   spark-master:
